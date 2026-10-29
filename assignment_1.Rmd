@@ -1,0 +1,185 @@
+---
+title: "Assignment 1"
+output: html_notebook
+---
+
+# Task 1: Literature
+
+> Developmental landscape of human forebrain at a single-cell level identifies early waves of oligodendrogenesis. David van Bruggen, et al. PMID: 35523173
+
+### Q1. What is the medically relevant insight from the article?
+
+### Q2. Which genomics technology/ technologies were used?
+
+single-cell RNA sequencing: examining the identity of cells based on gene expression profiles
+
+single-cell ATAC-seq: examining the chromatin accessibility, which is required for oligodentrogenesis
+
+Spatial *in situ* sequencing: locating the sites for early human oligodendrogenesis
+
+RNAscope HiPlex *in situ* hybridization: validating findings Spatial ISS analysis
+
+### Q3. List and explain at least three questions/ hypotheses you can think of that extend the analysis presented in the paper.
+
+### Q4. [Optional] Devise a computational analysis strategy for (some of) the listed questions under 3a.
+
+# Task 4: R basic operations
+
+```{r}
+cat('1. Square root of 10:', sqrt(10), '\n')
+cat('2. Logarithm of 32 to the base 2:', log2(32), '\n')
+cat('3. the sum of the numbers from 1 to 1000:', sum(seq(1000)), '\n')
+cat('4. the sum of all even numbers from 2 to 1000:', sum(seq(2, 1000, 2)), '\n')
+cat('5. the number of pairwise comparisons for 100 genes:', (100*100-100)/2, '\n')
+cat('6. the number of ways to arrange 100 genes in triplets:', factorial(100)/factorial(100-3), '\n')
+```
+
+# Task 5: Using R example datasets
+
+### 1. Load the CO2 dataset
+
+```{r}
+data('CO2')
+```
+
+### 2. Describe the dataset
+
+```{r}
+help(CO2)
+cat('Description:\n', 'The CO2 data frame has 84 rows and 5 columns of data from an experiment on the cold tolerance of the grass species Echinochloa crus-galli.')
+```
+
+### 3. the average and median CO2 uptake of the plants from Quebec and Mississippi
+
+```{r}
+summary_uptake = data.frame()
+cols_summary = c('type', 'mean', 'median')
+types = c('Quebec', 'Mississippi')
+
+# summary of each type
+for (i in 1:length(types)) {
+  type = types[i]
+  uptake_type = na.exclude(CO2[CO2$Type == type, 'uptake'])
+  
+  summary_uptake[i, cols_summary] = c(type,
+                                      round(mean(uptake_type), 2),
+                                      round(median(uptake_type), 2))}
+  
+print(summary_uptake)
+```
+
+### 4. [optional] genes expressed in each sample; genes not expressed in any sample
+
+```{r}
+# BiocManager::install("airway")
+# library('airway')
+# data('airway')
+```
+
+# Task 6: R Functions
+
+### 1. A function calculating the ratio of the mean and the median of a vector
+
+```{r}
+mean_over_median = function(x) {
+  x = na.exclude(x)
+  ratio = mean(x)/median(x)
+  return(ratio)
+}
+
+# test
+print(mean_over_median(c(2, 2, 3, 4, 5)))
+```
+
+### 2. A function calculating the mean after discarding the min and the max
+
+```{r}
+mean_without_extreme = function(x) {
+  x = na.exclude(x)
+  x = x[(x != min(x)) & (x != max(x))]
+  
+  return(mean(x))
+}
+
+# test
+mean_without_extreme(c(1, 2, 2, 5))
+```
+
+### 3. Explaining "piping"
+
+A pipe is discouraged when the included functions (1) have multiple inputs or outputs, (2) have a complex dependency, (3) use the current environment, or (4) use lazy evaluation. Besides, (5) piping too many intermediate steps/functions can make the code harder to read and debug.
+
+### 4. Explaining "apply-family functions"
+
+The apply-family functions are used to apply a function to each element in an iterable object. Though they won't make the running more efficient, they replace a for-loop with a more compact code snippet. In other words, it seems like they only make the code look better.
+
+# Task 7: Basic visualization with R
+
+# Task 8:
+
+### install packages and load data
+
+```{r}
+# install packages
+# install.packages('devtools')
+# devtools::install_github("hirscheylab/tidybiology")
+
+# load data
+library(tidyverse)
+library(tidybiology)
+data('chromosome')
+data('proteins')
+```
+
+### a. extract summary statistics in 'chromosome' data
+
+```{r}
+# I'm not using tidyverse functions here, cause it's easier for me to find a concise solution in base R.
+cols_chr = c('variations', 'protein_codinggenes', 'mi_rna')
+summary_chr = apply(chromosome[, cols_chr], 2, function(x) {
+  c(mean=mean(x, na.rm=T),
+    median=median(x, na.rm=T),
+    maximum=max(x, na.rm=T))
+})
+summary_chr
+```
+
+### b. visualization of chromosome size distribution
+
+```{r}
+library(ggplot2)
+library(patchwork)
+ggplot(data=chromosome, aes(x=id, y=length_mm)) + geom_col()
+```
+
+### c. visualization of relationships
+
+```{r}
+p1 = ggplot(chromosome, aes(x=length_mm, y=protein_codinggenes)) +
+  geom_point()
+p2 = ggplot(chromosome, aes(x=length_mm, y=mi_rna)) +
+  geom_point()
+
+p1 + p2
+```
+
+Based on the plots, the chromosome size showed positive correlations with both the number of protein coding genes, and that of miRNAs.
+
+### d. summarize the 'protein' data
+
+```{r}
+cols_protein = c('length', 'mass')
+summary_protein = apply(proteins[, cols_protein], 2, function(x) {
+  c(mean=mean(x, na.rm=T),
+    median=median(x, na.rm=T),
+    maximum=max(x, na.rm=T))
+})
+summary_protein
+```
+
+```{r}
+ggplot(proteins, aes(x=length, y=mass)) +
+  geom_point(alpha=0.5) +
+  geom_smooth(method='lm', color="salmon", se=T) +
+  theme_classic()
+```
