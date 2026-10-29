@@ -9,6 +9,8 @@ output: html_notebook
 
 ### Q1. What is the medically relevant insight from the article?
 
+This study doesn't focus on any medical trait, and thus the medical relevance is not mentioned in the paper. However, oligodendrocyte precursor cells have been linked to psychiatric disorders like schizophrenia and bipolar disorder, so findings from this study might help understand the neural mechanisms of mental disorders.
+
 ### Q2. Which genomics technology/ technologies were used?
 
 single-cell RNA sequencing: examining the identity of cells based on gene expression profiles
@@ -20,6 +22,10 @@ Spatial *in situ* sequencing: locating the sites for early human oligodendrogene
 RNAscope HiPlex *in situ* hybridization: validating findings Spatial ISS analysis
 
 ### Q3. List and explain at least three questions/ hypotheses you can think of that extend the analysis presented in the paper.
+
+1.  How does oligodendrogenesis progress in midbrain and hidbrain (compared to forebrain)?
+2.  If the first wave of oligodendrogenesis is evolutionary conservative, are any later oligodendrogenesis waves less evolutionary conservative (i.e., more specific to humans)?
+3.  If the 2nd is true, are those less evolutionary conservative oligodendrogenesis waves with more individual differences (in for example time), and related to human-specific cognitive traits like intelligence and psychiatric disorders?
 
 ### Q4. [Optional] Devise a computational analysis strategy for (some of) the listed questions under 3a.
 
