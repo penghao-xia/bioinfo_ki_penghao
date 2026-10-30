@@ -121,6 +121,99 @@ The apply-family functions are used to apply a function to each element in an it
 
 # Task 7: Basic visualization with R
 
+### 1. Compare the distributions of the body heights of the two species from the 'magic_guys.csv' dataset graphically
+
+```{r}
+library(ggplot2)
+# with basic hist function: Length of Jedi
+magic = read.csv('data/magic_guys.csv', header=T)
+hist(magic[magic$species == 'jedi', 'length'], breaks=8, xlim=c(0, 300),
+     xlab='Length of Jedi', main='')
+
+# with basic hist function: Length of Sith
+hist(magic[magic$species == 'sith', 'length'], breaks=8, xlim=c(0, 300),
+     xlab='Length of Sith', main='')
+
+# with ggplot and geom_histogram
+n_bins = 10
+hist_length = ggplot(magic, aes(x=length, fill=species)) +
+  geom_histogram(bins=n_bins, alpha=0.5, position='identity')
+
+ggsave("results/histogram_height.pdf", plot=hist_length)
+ggsave("results/histogram_height.png", plot=hist_length)
+ggsave("results/histogram_height.svg", plot=hist_length)
+print(hist_length)
+```
+
+```{r}
+box_height = ggplot(magic, aes(x=species, y=length)) +
+  geom_boxplot()
+ggsave("results/box_height.pdf", plot=box_height)
+ggsave("results/box_height.png", plot=box_height)
+ggsave("results/box_height.svg", plot=box_height)
+print(box_height)
+```
+
+Formats of 'pdf' and 'svg' are usually preferred, as they are vector graphics, which has high image quality, small file size, while allows for editing later.
+
+### 2. Inspect and visualize 'microarray_data.tab'
+
+```{r}
+microarray = read.table('data/microarray_data.tab', sep='\t', header=T)
+# a. inspect the size of the data frame
+print(sprintf('The matrix has %s rows and %s columns', nrow(microarray), ncol(microarray)))
+```
+
+```{r}
+# b. visualize the number of missing values per gene
+counts_missing = apply(is.na(microarray), 2, sum)
+names(counts_missing) = as.numeric(gsub('g', '', names(counts_missing)))
+barplot(counts_missing, xlab='Gene Number')
+```
+
+```{r}
+# c. find genes with specified missing rates
+# define the function for searching
+find_missing_genes = function(df, miss_rate) {
+  counts_missing  = apply(is.na(df), 2, sum)
+  percent_missing = counts_missing/nrow(df)
+  
+  list_result_genes = names(percent_missing[percent_missing > miss_rate])
+  return(list_result_genes)
+}
+
+# apply the function and report the results
+for (rate in c(0.1, 0.2, 0.5)) {
+  num_genes = length(find_missing_genes(microarray, rate))
+  print(sprintf('%s genes with missing rate > %s', num_genes, rate))
+}
+
+```
+
+```{r}
+# d. replacing missing values with the average expression
+for (col in names(microarray)) {
+  microarray[is.na(microarray[, col]), col] = mean(microarray[, col], na.rm=T)
+}
+```
+
+### 3. Visualize the CO2 data
+
+```{r}
+ggplot(CO2, aes(x=Type, y=uptake, fill=Treatment)) +
+  geom_boxplot()
+
+# merge define subgroups based on Type and Treatment
+CO2[, 'Group'] = paste(CO2[, 'Type'], CO2[, 'Treatment'], sep='-')
+ggplot(CO2, aes(x=conc, y=uptake)) +
+  geom_point(aes(color=Group), size = 2) +
+  facet_grid(Type ~ Treatment)
+```
+
+The bar plot shows that the Quebec types uptakes more CO2 than the Mississippi type, and the chilled treatment decreases CO2 uptake in both types. Especially, the CO2 uptake of the Mississippi type is more affected by the chilled treatment than the Quebec type.
+
+The scatter plot illustrates the positive association of ambient CO2 concentration and the CO2 uptake by the plants.
+
 # Task 8:
 
 ### install packages and load data
