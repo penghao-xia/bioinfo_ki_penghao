@@ -1,0 +1,714 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\documentclass[
+]{article}
+\usepackage{xcolor}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx}
+\makeatletter
+\newsavebox\pandoc@box
+\newcommand*\pandocbounded[1]{% scales image to fit in text height/width
+  \sbox\pandoc@box{#1}%
+  \Gscale@div\@tempa{\textheight}{\dimexpr\ht\pandoc@box+\dp\pandoc@box\relax}%
+  \Gscale@div\@tempb{\linewidth}{\wd\pandoc@box}%
+  \ifdim\@tempb\p@<\@tempa\p@\let\@tempa\@tempb\fi% select the smaller of both
+  \ifdim\@tempa\p@<\p@\scalebox{\@tempa}{\usebox\pandoc@box}%
+  \else\usebox{\pandoc@box}%
+  \fi%
+}
+% Set default figure placement to htbp
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\usepackage{bookmark}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+% fallback for those not using the hyperref driver hyperxmp:
+\makeatletter
+\@ifundefined{xmpquote}{\newcommand{\xmpquote}[1]{#1}}{}
+\makeatother
+\hypersetup{
+  pdftitle={Assignment 1},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\title{Assignment 1}
+\author{}
+\date{\vspace{-2.5em}}
+
+\begin{document}
+\maketitle
+
+\section{Task 1: Literature}\label{task-1-literature}
+
+\begin{quote}
+Developmental landscape of human forebrain at a single-cell level
+identifies early waves of oligodendrogenesis. David van Bruggen, et
+al.~PMID: 35523173
+\end{quote}
+
+\subsubsection{Q1. What is the medically relevant insight from the
+article?}\label{q1.-what-is-the-medically-relevant-insight-from-the-article}
+
+This study doesn't focus on any medical trait, and thus the medical
+relevance is not mentioned in the paper. However, oligodendrocyte
+precursor cells have been linked to psychiatric disorders like
+schizophrenia and bipolar disorder, so findings from this study might
+help understand the neural mechanisms of mental disorders.
+
+\subsubsection{Q2. Which genomics technology/ technologies were
+used?}\label{q2.-which-genomics-technology-technologies-were-used}
+
+single-cell RNA sequencing: examining the identity of cells based on
+gene expression profiles
+
+single-cell ATAC-seq: examining the chromatin accessibility, which is
+required for oligodentrogenesis
+
+Spatial \emph{in situ} sequencing: locating the sites for early human
+oligodendrogenesis
+
+RNAscope HiPlex \emph{in situ} hybridization: validating findings
+Spatial ISS analysis
+
+\subsubsection{Q3. List and explain at least three questions/ hypotheses
+you can think of that extend the analysis presented in the
+paper.}\label{q3.-list-and-explain-at-least-three-questions-hypotheses-you-can-think-of-that-extend-the-analysis-presented-in-the-paper.}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  How does oligodendrogenesis progress in midbrain and hidbrain
+  (compared to forebrain)?
+\item
+  If the first wave of oligodendrogenesis is evolutionary conservative,
+  are any later oligodendrogenesis waves less evolutionary conservative
+  (i.e., more specific to humans)?
+\item
+  If the 2nd is true, are those less evolutionary conservative
+  oligodendrogenesis waves with more individual differences (in for
+  example time), and related to human-specific cognitive traits like
+  intelligence and psychiatric disorders?
+\end{enumerate}
+
+\subsubsection{Q4. {[}Optional{]} Devise a computational analysis
+strategy for (some of) the listed questions under
+3a.}\label{q4.-optional-devise-a-computational-analysis-strategy-for-some-of-the-listed-questions-under-3a.}
+
+\section{Task 4: R basic operations}\label{task-4-r-basic-operations}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{cat}\NormalTok{(}\StringTok{\textquotesingle{}1. Square root of 10:\textquotesingle{}}\NormalTok{, }\FunctionTok{sqrt}\NormalTok{(}\DecValTok{10}\NormalTok{), }\StringTok{\textquotesingle{}}\SpecialCharTok{\textbackslash{}n}\StringTok{\textquotesingle{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 1. Square root of 10: 3.162278
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{cat}\NormalTok{(}\StringTok{\textquotesingle{}2. Logarithm of 32 to the base 2:\textquotesingle{}}\NormalTok{, }\FunctionTok{log2}\NormalTok{(}\DecValTok{32}\NormalTok{), }\StringTok{\textquotesingle{}}\SpecialCharTok{\textbackslash{}n}\StringTok{\textquotesingle{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 2. Logarithm of 32 to the base 2: 5
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{cat}\NormalTok{(}\StringTok{\textquotesingle{}3. the sum of the numbers from 1 to 1000:\textquotesingle{}}\NormalTok{, }\FunctionTok{sum}\NormalTok{(}\FunctionTok{seq}\NormalTok{(}\DecValTok{1000}\NormalTok{)), }\StringTok{\textquotesingle{}}\SpecialCharTok{\textbackslash{}n}\StringTok{\textquotesingle{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 3. the sum of the numbers from 1 to 1000: 500500
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{cat}\NormalTok{(}\StringTok{\textquotesingle{}4. the sum of all even numbers from 2 to 1000:\textquotesingle{}}\NormalTok{, }\FunctionTok{sum}\NormalTok{(}\FunctionTok{seq}\NormalTok{(}\DecValTok{2}\NormalTok{, }\DecValTok{1000}\NormalTok{, }\DecValTok{2}\NormalTok{)), }\StringTok{\textquotesingle{}}\SpecialCharTok{\textbackslash{}n}\StringTok{\textquotesingle{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 4. the sum of all even numbers from 2 to 1000: 250500
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{cat}\NormalTok{(}\StringTok{\textquotesingle{}5. the number of pairwise comparisons for 100 genes:\textquotesingle{}}\NormalTok{, (}\DecValTok{100}\SpecialCharTok{*}\DecValTok{100{-}100}\NormalTok{)}\SpecialCharTok{/}\DecValTok{2}\NormalTok{, }\StringTok{\textquotesingle{}}\SpecialCharTok{\textbackslash{}n}\StringTok{\textquotesingle{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 5. the number of pairwise comparisons for 100 genes: 4950
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{cat}\NormalTok{(}\StringTok{\textquotesingle{}6. the number of ways to arrange 100 genes in triplets:\textquotesingle{}}\NormalTok{, }\FunctionTok{factorial}\NormalTok{(}\DecValTok{100}\NormalTok{)}\SpecialCharTok{/}\FunctionTok{factorial}\NormalTok{(}\DecValTok{100{-}3}\NormalTok{), }\StringTok{\textquotesingle{}}\SpecialCharTok{\textbackslash{}n}\StringTok{\textquotesingle{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 6. the number of ways to arrange 100 genes in triplets: 970200
+\end{verbatim}
+
+\section{Task 5: Using R example
+datasets}\label{task-5-using-r-example-datasets}
+
+\subsubsection{1. Load the CO2 dataset}\label{load-the-co2-dataset}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{data}\NormalTok{(}\StringTok{\textquotesingle{}CO2\textquotesingle{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\subsubsection{2. Describe the dataset}\label{describe-the-dataset}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{help}\NormalTok{(CO2)}
+\FunctionTok{cat}\NormalTok{(}\StringTok{\textquotesingle{}Description:}\SpecialCharTok{\textbackslash{}n}\StringTok{\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}The CO2 data frame has 84 rows and 5 columns of data from an experiment on the cold tolerance of the grass species Echinochloa crus{-}galli.\textquotesingle{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Description:
+##  The CO2 data frame has 84 rows and 5 columns of data from an experiment on the cold tolerance of the grass species Echinochloa crus-galli.
+\end{verbatim}
+
+\subsubsection{3. the average and median CO2 uptake of the plants from
+Quebec and
+Mississippi}\label{the-average-and-median-co2-uptake-of-the-plants-from-quebec-and-mississippi}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{summary\_uptake }\OtherTok{=} \FunctionTok{data.frame}\NormalTok{()}
+\NormalTok{cols\_summary }\OtherTok{=} \FunctionTok{c}\NormalTok{(}\StringTok{\textquotesingle{}type\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}mean\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}median\textquotesingle{}}\NormalTok{)}
+\NormalTok{types }\OtherTok{=} \FunctionTok{c}\NormalTok{(}\StringTok{\textquotesingle{}Quebec\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}Mississippi\textquotesingle{}}\NormalTok{)}
+
+\CommentTok{\# summary of each type}
+\ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\FunctionTok{length}\NormalTok{(types)) \{}
+\NormalTok{  type }\OtherTok{=}\NormalTok{ types[i]}
+\NormalTok{  uptake\_type }\OtherTok{=} \FunctionTok{na.exclude}\NormalTok{(CO2[CO2}\SpecialCharTok{$}\NormalTok{Type }\SpecialCharTok{==}\NormalTok{ type, }\StringTok{\textquotesingle{}uptake\textquotesingle{}}\NormalTok{])}
+  
+\NormalTok{  summary\_uptake[i, cols\_summary] }\OtherTok{=} \FunctionTok{c}\NormalTok{(type,}
+                                      \FunctionTok{round}\NormalTok{(}\FunctionTok{mean}\NormalTok{(uptake\_type), }\DecValTok{2}\NormalTok{),}
+                                      \FunctionTok{round}\NormalTok{(}\FunctionTok{median}\NormalTok{(uptake\_type), }\DecValTok{2}\NormalTok{))\}}
+  
+\FunctionTok{print}\NormalTok{(summary\_uptake)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##          type  mean median
+## 1      Quebec 33.54  37.15
+## 2 Mississippi 20.88   19.3
+\end{verbatim}
+
+\subsubsection{4. {[}optional{]} genes expressed in each sample; genes
+not expressed in any
+sample}\label{optional-genes-expressed-in-each-sample-genes-not-expressed-in-any-sample}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# BiocManager::install("airway")}
+\CommentTok{\# library(\textquotesingle{}airway\textquotesingle{})}
+\CommentTok{\# data(\textquotesingle{}airway\textquotesingle{})}
+\end{Highlighting}
+\end{Shaded}
+
+\section{Task 6: R Functions}\label{task-6-r-functions}
+
+\subsubsection{1. A function calculating the ratio of the mean and the
+median of a
+vector}\label{a-function-calculating-the-ratio-of-the-mean-and-the-median-of-a-vector}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mean\_over\_median }\OtherTok{=} \ControlFlowTok{function}\NormalTok{(x) \{}
+\NormalTok{  x }\OtherTok{=} \FunctionTok{na.exclude}\NormalTok{(x)}
+\NormalTok{  ratio }\OtherTok{=} \FunctionTok{mean}\NormalTok{(x)}\SpecialCharTok{/}\FunctionTok{median}\NormalTok{(x)}
+  \FunctionTok{return}\NormalTok{(ratio)}
+\NormalTok{\}}
+
+\CommentTok{\# test}
+\FunctionTok{print}\NormalTok{(}\FunctionTok{mean\_over\_median}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{3}\NormalTok{, }\DecValTok{4}\NormalTok{, }\DecValTok{5}\NormalTok{)))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1.066667
+\end{verbatim}
+
+\subsubsection{2. A function calculating the mean after discarding the
+min and the
+max}\label{a-function-calculating-the-mean-after-discarding-the-min-and-the-max}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mean\_without\_extreme }\OtherTok{=} \ControlFlowTok{function}\NormalTok{(x) \{}
+\NormalTok{  x }\OtherTok{=} \FunctionTok{na.exclude}\NormalTok{(x)}
+\NormalTok{  x }\OtherTok{=}\NormalTok{ x[(x }\SpecialCharTok{!=} \FunctionTok{min}\NormalTok{(x)) }\SpecialCharTok{\&}\NormalTok{ (x }\SpecialCharTok{!=} \FunctionTok{max}\NormalTok{(x))]}
+  
+  \FunctionTok{return}\NormalTok{(}\FunctionTok{mean}\NormalTok{(x))}
+\NormalTok{\}}
+
+\CommentTok{\# test}
+\FunctionTok{mean\_without\_extreme}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{5}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 2
+\end{verbatim}
+
+\subsubsection{3. Explaining ``piping''}\label{explaining-piping}
+
+A pipe is discouraged when the included functions (1) have multiple
+inputs or outputs, (2) have a complex dependency, (3) use the current
+environment, or (4) use lazy evaluation. Besides, (5) piping too many
+intermediate steps/functions can make the code harder to read and debug.
+
+\subsubsection{4. Explaining ``apply-family
+functions''}\label{explaining-apply-family-functions}
+
+The apply-family functions are used to apply a function to each element
+in an iterable object. Though they won't make the running more
+efficient, they replace a for-loop with a more compact code snippet. In
+other words, it seems like they only make the code look better.
+
+\section{Task 7: Basic visualization with
+R}\label{task-7-basic-visualization-with-r}
+
+\subsubsection{1. Compare the distributions of the body heights of the
+two species from the `magic\_guys.csv' dataset
+graphically}\label{compare-the-distributions-of-the-body-heights-of-the-two-species-from-the-magic_guys.csv-dataset-graphically}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(ggplot2)}
+\CommentTok{\# with basic hist function: Length of Jedi}
+\NormalTok{magic }\OtherTok{=} \FunctionTok{read.csv}\NormalTok{(}\StringTok{\textquotesingle{}data/magic\_guys.csv\textquotesingle{}}\NormalTok{, }\AttributeTok{header=}\NormalTok{T)}
+\FunctionTok{hist}\NormalTok{(magic[magic}\SpecialCharTok{$}\NormalTok{species }\SpecialCharTok{==} \StringTok{\textquotesingle{}jedi\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}length\textquotesingle{}}\NormalTok{], }\AttributeTok{breaks=}\DecValTok{8}\NormalTok{, }\AttributeTok{xlim=}\FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{300}\NormalTok{),}
+     \AttributeTok{xlab=}\StringTok{\textquotesingle{}Length of Jedi\textquotesingle{}}\NormalTok{, }\AttributeTok{main=}\StringTok{\textquotesingle{}\textquotesingle{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{assignment_1_files/figure-latex/unnamed-chunk-8-1.pdf}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# with basic hist function: Length of Sith}
+\FunctionTok{hist}\NormalTok{(magic[magic}\SpecialCharTok{$}\NormalTok{species }\SpecialCharTok{==} \StringTok{\textquotesingle{}sith\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}length\textquotesingle{}}\NormalTok{], }\AttributeTok{breaks=}\DecValTok{8}\NormalTok{, }\AttributeTok{xlim=}\FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{300}\NormalTok{),}
+     \AttributeTok{xlab=}\StringTok{\textquotesingle{}Length of Sith\textquotesingle{}}\NormalTok{, }\AttributeTok{main=}\StringTok{\textquotesingle{}\textquotesingle{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{assignment_1_files/figure-latex/unnamed-chunk-8-2.pdf}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# with ggplot and geom\_histogram}
+\NormalTok{n\_bins }\OtherTok{=} \DecValTok{10}
+\NormalTok{hist\_length }\OtherTok{=} \FunctionTok{ggplot}\NormalTok{(magic, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{length, }\AttributeTok{fill=}\NormalTok{species)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_histogram}\NormalTok{(}\AttributeTok{bins=}\NormalTok{n\_bins, }\AttributeTok{alpha=}\FloatTok{0.5}\NormalTok{, }\AttributeTok{position=}\StringTok{\textquotesingle{}identity\textquotesingle{}}\NormalTok{)}
+
+\FunctionTok{ggsave}\NormalTok{(}\StringTok{"results/histogram\_height.pdf"}\NormalTok{, }\AttributeTok{plot=}\NormalTok{hist\_length)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Saving 6.5 x 4.5 in image
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggsave}\NormalTok{(}\StringTok{"results/histogram\_height.png"}\NormalTok{, }\AttributeTok{plot=}\NormalTok{hist\_length)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Saving 6.5 x 4.5 in image
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggsave}\NormalTok{(}\StringTok{"results/histogram\_height.svg"}\NormalTok{, }\AttributeTok{plot=}\NormalTok{hist\_length)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Saving 6.5 x 4.5 in image
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{print}\NormalTok{(hist\_length)}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{assignment_1_files/figure-latex/unnamed-chunk-8-3.pdf}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{box\_height }\OtherTok{=} \FunctionTok{ggplot}\NormalTok{(magic, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{species, }\AttributeTok{y=}\NormalTok{length)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_boxplot}\NormalTok{()}
+\FunctionTok{ggsave}\NormalTok{(}\StringTok{"results/box\_height.pdf"}\NormalTok{, }\AttributeTok{plot=}\NormalTok{box\_height)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Saving 6.5 x 4.5 in image
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggsave}\NormalTok{(}\StringTok{"results/box\_height.png"}\NormalTok{, }\AttributeTok{plot=}\NormalTok{box\_height)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Saving 6.5 x 4.5 in image
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggsave}\NormalTok{(}\StringTok{"results/box\_height.svg"}\NormalTok{, }\AttributeTok{plot=}\NormalTok{box\_height)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Saving 6.5 x 4.5 in image
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{print}\NormalTok{(box\_height)}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{assignment_1_files/figure-latex/unnamed-chunk-9-1.pdf}}
+
+Formats of `pdf' and `svg' are usually preferred, as they are vector
+graphics, which has high image quality, small file size, while allows
+for editing later.
+
+\subsubsection{2. Inspect and visualize
+`microarray\_data.tab'}\label{inspect-and-visualize-microarray_data.tab}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{microarray }\OtherTok{=} \FunctionTok{read.table}\NormalTok{(}\StringTok{\textquotesingle{}data/microarray\_data.tab\textquotesingle{}}\NormalTok{, }\AttributeTok{sep=}\StringTok{\textquotesingle{}}\SpecialCharTok{\textbackslash{}t}\StringTok{\textquotesingle{}}\NormalTok{, }\AttributeTok{header=}\NormalTok{T)}
+\CommentTok{\# a. inspect the size of the data frame}
+\FunctionTok{print}\NormalTok{(}\FunctionTok{sprintf}\NormalTok{(}\StringTok{\textquotesingle{}The matrix has \%s rows and \%s columns\textquotesingle{}}\NormalTok{, }\FunctionTok{nrow}\NormalTok{(microarray), }\FunctionTok{ncol}\NormalTok{(microarray)))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "The matrix has 553 rows and 1000 columns"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# b. visualize the number of missing values per gene}
+\NormalTok{counts\_missing }\OtherTok{=} \FunctionTok{apply}\NormalTok{(}\FunctionTok{is.na}\NormalTok{(microarray), }\DecValTok{2}\NormalTok{, sum)}
+\FunctionTok{names}\NormalTok{(counts\_missing) }\OtherTok{=} \FunctionTok{as.numeric}\NormalTok{(}\FunctionTok{gsub}\NormalTok{(}\StringTok{\textquotesingle{}g\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}\textquotesingle{}}\NormalTok{, }\FunctionTok{names}\NormalTok{(counts\_missing)))}
+\FunctionTok{barplot}\NormalTok{(counts\_missing, }\AttributeTok{xlab=}\StringTok{\textquotesingle{}Gene Number\textquotesingle{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{assignment_1_files/figure-latex/unnamed-chunk-11-1.pdf}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# c. find genes with specified missing rates}
+\CommentTok{\# define the function for searching}
+\NormalTok{find\_missing\_genes }\OtherTok{=} \ControlFlowTok{function}\NormalTok{(df, miss\_rate) \{}
+\NormalTok{  counts\_missing  }\OtherTok{=} \FunctionTok{apply}\NormalTok{(}\FunctionTok{is.na}\NormalTok{(df), }\DecValTok{2}\NormalTok{, sum)}
+\NormalTok{  percent\_missing }\OtherTok{=}\NormalTok{ counts\_missing}\SpecialCharTok{/}\FunctionTok{nrow}\NormalTok{(df)}
+  
+\NormalTok{  list\_result\_genes }\OtherTok{=} \FunctionTok{names}\NormalTok{(percent\_missing[percent\_missing }\SpecialCharTok{\textgreater{}}\NormalTok{ miss\_rate])}
+  \FunctionTok{return}\NormalTok{(list\_result\_genes)}
+\NormalTok{\}}
+
+\CommentTok{\# apply the function and report the results}
+\ControlFlowTok{for}\NormalTok{ (rate }\ControlFlowTok{in} \FunctionTok{c}\NormalTok{(}\FloatTok{0.1}\NormalTok{, }\FloatTok{0.2}\NormalTok{, }\FloatTok{0.5}\NormalTok{)) \{}
+\NormalTok{  num\_genes }\OtherTok{=} \FunctionTok{length}\NormalTok{(}\FunctionTok{find\_missing\_genes}\NormalTok{(microarray, rate))}
+  \FunctionTok{print}\NormalTok{(}\FunctionTok{sprintf}\NormalTok{(}\StringTok{\textquotesingle{}\%s genes with missing rate \textgreater{} \%s\textquotesingle{}}\NormalTok{, num\_genes, rate))}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "529 genes with missing rate > 0.1"
+## [1] "377 genes with missing rate > 0.2"
+## [1] "74 genes with missing rate > 0.5"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# d. replacing missing values with the average expression}
+\ControlFlowTok{for}\NormalTok{ (col }\ControlFlowTok{in} \FunctionTok{names}\NormalTok{(microarray)) \{}
+\NormalTok{  microarray[}\FunctionTok{is.na}\NormalTok{(microarray[, col]), col] }\OtherTok{=} \FunctionTok{mean}\NormalTok{(microarray[, col], }\AttributeTok{na.rm=}\NormalTok{T)}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\subsubsection{3. Visualize the CO2 data}\label{visualize-the-co2-data}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggplot}\NormalTok{(CO2, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{Type, }\AttributeTok{y=}\NormalTok{uptake, }\AttributeTok{fill=}\NormalTok{Treatment)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_boxplot}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{assignment_1_files/figure-latex/unnamed-chunk-14-1.pdf}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# merge define subgroups based on Type and Treatment}
+\NormalTok{CO2[, }\StringTok{\textquotesingle{}Group\textquotesingle{}}\NormalTok{] }\OtherTok{=} \FunctionTok{paste}\NormalTok{(CO2[, }\StringTok{\textquotesingle{}Type\textquotesingle{}}\NormalTok{], CO2[, }\StringTok{\textquotesingle{}Treatment\textquotesingle{}}\NormalTok{], }\AttributeTok{sep=}\StringTok{\textquotesingle{}{-}\textquotesingle{}}\NormalTok{)}
+\FunctionTok{ggplot}\NormalTok{(CO2, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{conc, }\AttributeTok{y=}\NormalTok{uptake)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{color=}\NormalTok{Group), }\AttributeTok{size =} \DecValTok{2}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{facet\_grid}\NormalTok{(Type }\SpecialCharTok{\textasciitilde{}}\NormalTok{ Treatment)}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{assignment_1_files/figure-latex/unnamed-chunk-14-2.pdf}}
+
+The bar plot shows that the Quebec types uptakes more CO2 than the
+Mississippi type, and the chilled treatment decreases CO2 uptake in both
+types. Especially, the CO2 uptake of the Mississippi type is more
+affected by the chilled treatment than the Quebec type.
+
+The scatter plot illustrates the positive association of ambient CO2
+concentration and the CO2 uptake by the plants.
+
+\section{Task 8:}\label{task-8}
+
+\subsubsection{install packages and load
+data}\label{install-packages-and-load-data}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# install packages}
+\CommentTok{\# install.packages(\textquotesingle{}devtools\textquotesingle{})}
+\CommentTok{\# devtools::install\_github("hirscheylab/tidybiology")}
+
+\CommentTok{\# load data}
+\FunctionTok{library}\NormalTok{(tidyverse)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: package 'tibble' was built under R version 4.4.3
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: package 'tidyr' was built under R version 4.4.3
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: package 'readr' was built under R version 4.4.3
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: package 'lubridate' was built under R version 4.4.3
+\end{verbatim}
+
+\begin{verbatim}
+## -- Attaching core tidyverse packages ------------------------ tidyverse 2.0.0 --
+## v dplyr     1.2.1     v readr     2.2.0
+## v forcats   1.0.1     v stringr   1.6.0
+## v lubridate 1.9.5     v tibble    3.3.1
+## v purrr     1.2.2     v tidyr     1.3.2
+## -- Conflicts ------------------------------------------ tidyverse_conflicts() --
+## x dplyr::filter() masks stats::filter()
+## x dplyr::lag()    masks stats::lag()
+## i Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(tidybiology)}
+\FunctionTok{data}\NormalTok{(}\StringTok{\textquotesingle{}chromosome\textquotesingle{}}\NormalTok{)}
+\FunctionTok{data}\NormalTok{(}\StringTok{\textquotesingle{}proteins\textquotesingle{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\subsubsection{a. extract summary statistics in `chromosome'
+data}\label{a.-extract-summary-statistics-in-chromosome-data}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# I\textquotesingle{}m not using tidyverse functions here, cause it\textquotesingle{}s easier for me to find a concise solution in base R.}
+\NormalTok{cols\_chr }\OtherTok{=} \FunctionTok{c}\NormalTok{(}\StringTok{\textquotesingle{}variations\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}protein\_codinggenes\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}mi\_rna\textquotesingle{}}\NormalTok{)}
+\NormalTok{summary\_chr }\OtherTok{=} \FunctionTok{apply}\NormalTok{(chromosome[, cols\_chr], }\DecValTok{2}\NormalTok{, }\ControlFlowTok{function}\NormalTok{(x) \{}
+  \FunctionTok{c}\NormalTok{(}\AttributeTok{mean=}\FunctionTok{mean}\NormalTok{(x, }\AttributeTok{na.rm=}\NormalTok{T),}
+    \AttributeTok{median=}\FunctionTok{median}\NormalTok{(x, }\AttributeTok{na.rm=}\NormalTok{T),}
+    \AttributeTok{maximum=}\FunctionTok{max}\NormalTok{(x, }\AttributeTok{na.rm=}\NormalTok{T))}
+\NormalTok{\})}
+\NormalTok{summary\_chr}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##         variations protein_codinggenes    mi_rna
+## mean       6484572            849.9583  73.16667
+## median     6172346            836.0000  75.00000
+## maximum   12945965           2058.0000 134.00000
+\end{verbatim}
+
+\subsubsection{b. visualization of chromosome size
+distribution}\label{b.-visualization-of-chromosome-size-distribution}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(ggplot2)}
+\FunctionTok{library}\NormalTok{(patchwork)}
+\FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data=}\NormalTok{chromosome, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{id, }\AttributeTok{y=}\NormalTok{length\_mm)) }\SpecialCharTok{+} \FunctionTok{geom\_col}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{assignment_1_files/figure-latex/unnamed-chunk-17-1.pdf}}
+
+\subsubsection{c.~visualization of
+relationships}\label{c.-visualization-of-relationships}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{p1 }\OtherTok{=} \FunctionTok{ggplot}\NormalTok{(chromosome, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{length\_mm, }\AttributeTok{y=}\NormalTok{protein\_codinggenes)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{()}
+\NormalTok{p2 }\OtherTok{=} \FunctionTok{ggplot}\NormalTok{(chromosome, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{length\_mm, }\AttributeTok{y=}\NormalTok{mi\_rna)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{()}
+
+\NormalTok{p1 }\SpecialCharTok{+}\NormalTok{ p2}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{assignment_1_files/figure-latex/unnamed-chunk-18-1.pdf}}
+
+Based on the plots, the chromosome size showed positive correlations
+with both the number of protein coding genes, and that of miRNAs.
+
+\subsubsection{d.~summarize the `protein'
+data}\label{d.-summarize-the-protein-data}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{cols\_protein }\OtherTok{=} \FunctionTok{c}\NormalTok{(}\StringTok{\textquotesingle{}length\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}mass\textquotesingle{}}\NormalTok{)}
+\NormalTok{summary\_protein }\OtherTok{=} \FunctionTok{apply}\NormalTok{(proteins[, cols\_protein], }\DecValTok{2}\NormalTok{, }\ControlFlowTok{function}\NormalTok{(x) \{}
+  \FunctionTok{c}\NormalTok{(}\AttributeTok{mean=}\FunctionTok{mean}\NormalTok{(x, }\AttributeTok{na.rm=}\NormalTok{T),}
+    \AttributeTok{median=}\FunctionTok{median}\NormalTok{(x, }\AttributeTok{na.rm=}\NormalTok{T),}
+    \AttributeTok{maximum=}\FunctionTok{max}\NormalTok{(x, }\AttributeTok{na.rm=}\NormalTok{T))}
+\NormalTok{\})}
+\NormalTok{summary\_protein}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##             length       mass
+## mean      557.1603   62061.38
+## median    414.0000   46140.50
+## maximum 34350.0000 3816030.00
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggplot}\NormalTok{(proteins, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{length, }\AttributeTok{y=}\NormalTok{mass)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{alpha=}\FloatTok{0.5}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{geom\_smooth}\NormalTok{(}\AttributeTok{method=}\StringTok{\textquotesingle{}lm\textquotesingle{}}\NormalTok{, }\AttributeTok{color=}\StringTok{"salmon"}\NormalTok{, }\AttributeTok{se=}\NormalTok{T) }\SpecialCharTok{+}
+  \FunctionTok{theme\_classic}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## `geom_smooth()` using formula = 'y ~ x'
+\end{verbatim}
+
+\pandocbounded{\includegraphics[keepaspectratio]{assignment_1_files/figure-latex/unnamed-chunk-20-1.pdf}}
+
+\end{document}

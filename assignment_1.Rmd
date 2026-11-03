@@ -1,6 +1,10 @@
 ---
 title: "Assignment 1"
-output: html_notebook
+output:
+  html_document:
+    df_print: paged
+  pdf_document: default
+  html_notebook: default
 ---
 
 # Task 1: Literature
